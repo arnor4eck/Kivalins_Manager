@@ -4,11 +4,17 @@ import QtQuick.Controls
 Popup {
     id: root
     property int textSize: 24
-    property int proportion: (root.textSize == 24 ? 4 : 2);
+    property int proportion: (root.textSize == 24 ? 2 : 1);
+    property int parentWidth: 0;
+    property int parentHeight: 0;
+    property string taskName: "";
+    property string taskDescription: ""
+    property int taskId: -1;
+    property int boardId: -1;
 
     anchors.centerIn: Overlay.overlay
-    width: parent.width / root.proportion
-    height: parent.width / root.proportion
+    width: root.parentWidth / root.proportion + (root.textSize == 24 ? 30 : 0)
+    height: root.parentWidth / root.proportion + (root.textSize == 24 ? 30 : 0)
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -20,43 +26,34 @@ Popup {
             id: error
         }
 
-        SuccessWindow{
-            id: success
-        }
-
         Column {
             anchors.centerIn: parent
             spacing: 10
 
             TextField {
                 id: nameField
-                placeholderText: "Название доски"
+                text: root.taskName;
+                placeholderText: "Название задачи"
             }
 
             TextField {
                 id: descriptionField
-                placeholderText: "Описание доски"
+                text: (root.taskDescription != "Описание отсутствует" ? root.taskDescription : "");
+                placeholderText: "Описание задачи"
             }
 
             Button {
                 text: "Сохранить"
                 onClicked: {
-                    createBoardObject.setName(nameField.text)
-                    createBoardObject.setDescription(descriptionField.text)
-                    if (createBoardObject.saveData()) {
-                        nameField.text = '';
-                        descriptionField.text = '';
-
-                        success.text = "Доска создана";
-                        success.textSize = root.textSize
-                        success.open();
+                    if (taskModel.updateTask(root.boardId, root.taskId, nameField.text, descriptionField.text)) {
+                        taskModel.refreshModel(boardId);
                         root.close();
                     }
                 }
             }
 
             Connections {
-                target: createBoardObject
+                target: taskModel
                 function onShowError(message) {
                     error.errorText = message;
                     error.textSize = root.textSize

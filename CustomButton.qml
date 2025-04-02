@@ -4,6 +4,7 @@ Rectangle{
     id: root
     property color buttonColor: "darkblue"
     property color parentColor: "lightblue"
+    property color textColor: "lightblue"
     property alias text: caption.text
     property alias textSize: caption.font.pixelSize
     property alias radius: rect.radius
@@ -25,8 +26,8 @@ Rectangle{
         Text{
             id: caption
             anchors.centerIn: parent
-            color: "lightblue"
-            text: qsTr("text")
+            color: root.textColor
+            text: "";
             font.pixelSize: 24
         }
         MouseArea{

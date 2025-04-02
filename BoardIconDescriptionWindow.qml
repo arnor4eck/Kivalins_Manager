@@ -5,7 +5,6 @@ import QtQuick.Layouts
 Popup {
     id: root
     property int textSize: 24
-    property int proportion: (root.textSize == 24 ? 4 : 2);
     property string description: ""
     property alias creationTime: creationTime.text
 

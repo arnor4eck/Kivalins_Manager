@@ -5,10 +5,13 @@ Popup {
     id: root
     property int textSize: 24
     property int proportion: (root.textSize == 24 ? 4 : 2);
+    property int parentWidth: 0;
+    property int parentHeight: 0;
+    property int boardId: -1;
 
     anchors.centerIn: Overlay.overlay
-    width: parent.width / root.proportion
-    height: parent.width / root.proportion
+    width: root.parentWidth / root.proportion
+    height: root.parentWidth / root.proportion
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -30,33 +33,28 @@ Popup {
 
             TextField {
                 id: nameField
-                placeholderText: "Название доски"
-            }
-
-            TextField {
-                id: descriptionField
-                placeholderText: "Описание доски"
+                placeholderText: "Название типа"
             }
 
             Button {
                 text: "Сохранить"
                 onClicked: {
-                    createBoardObject.setName(nameField.text)
-                    createBoardObject.setDescription(descriptionField.text)
-                    if (createBoardObject.saveData()) {
+                    createTypeObject.setName(nameField.text)
+                    createTypeObject.setBoardId(root.boardId)
+                    if (createTypeObject.saveData()) {
                         nameField.text = '';
-                        descriptionField.text = '';
 
-                        success.text = "Доска создана";
+                        success.text = "Тип задачи создан!";
                         success.textSize = root.textSize
                         success.open();
+                        typeModel.refreshModel(boardId);
                         root.close();
                     }
                 }
             }
 
             Connections {
-                target: createBoardObject
+                target: createTypeObject
                 function onShowError(message) {
                     error.errorText = message;
                     error.textSize = root.textSize

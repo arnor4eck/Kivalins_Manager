@@ -34,7 +34,6 @@ Rectangle{
             anchors.fill: parent
             onClicked: {
                 root.clicked();
-                console.log(root.width, root.height)
             }
         }
     }

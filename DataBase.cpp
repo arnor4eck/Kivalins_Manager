@@ -10,7 +10,7 @@ void DataBase::createTable(const std::string &params){
 
 void DataBase::addData(const std::string &table_name, const std::string columns, const std::string &data){
     try{
-        std::string query = "INSERT INTO " + table_name + '(' + columns + ")\n" + "VALUES\n" + '(' + data + ')';
+        std::string query = "INSERT INTO " + table_name + "(" + columns + ")\n" + "VALUES\n" + "(" + data + ")";
 
         this->db.exec(query.c_str());
     }catch(const std::exception &e){
@@ -19,8 +19,8 @@ void DataBase::addData(const std::string &table_name, const std::string columns,
 }
 
 SQLite::Statement DataBase::getData(const std::string &table_name, const std::string columns, const std::string filters){
-    std::string query = "SELECT " + columns + " FROM " + table_name;
-    if(!filters.empty()) query += filters;
+    std::string query = "SELECT " + columns + " FROM " + table_name + " ";
+    if(!filters.empty()) query += "WHERE " + filters;
 
     try{
         return SQLite::Statement(this->db, query);

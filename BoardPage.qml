@@ -1,0 +1,183 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+
+Page {
+    id: root
+    property color backgroundColor: "lightblue"
+    property int textSize: 24
+    property StackView stackView
+    property string boardName: "Название доски"
+    property int boardId: -1;
+
+    Component.onCompleted: {
+        taskModel.refreshModel(root.boardId)
+    }
+
+    background: Rectangle{
+        id: backgroundRect
+        color: root.backgroundColor
+    }
+
+    ColumnLayout{
+        id: coColumn
+        anchors.fill: parent
+        spacing: 5
+
+        Rectangle{
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            Layout.fillWidth: true
+            height: back.height
+            color: root.backgroundColor
+            CustomButton{
+                id: back
+                text: "<"
+                textSize: root.textSize
+                needsPadding: false
+                radius: 0
+                onClicked: {
+                    stackView.pop()
+                }
+            }
+            Text{
+                id: name
+                anchors.centerIn: parent
+                text: boardName
+                font.pixelSize: root.textSize
+                font.weight: Font.DemiBold
+            }
+            CircularButton{
+                id: showSettings
+                anchors.right: parent.right
+                parentColor: root.backgroundColor
+                text: ":"
+                textSize: root.textSize
+                needsPadding: false
+
+                onClicked: {
+                    // настройки
+                }
+            }
+        }
+
+        CreateTaskWindow{
+            id: createTaskWindow
+            textSize: root.textSize
+            parentWidth: root.width;
+            parentHeight: root.height;
+            boardId: root.boardId;
+        }
+
+        RowLayout{
+            id: coRow
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: 5
+
+            ColumnLayout{
+                id: innerButtonColumn
+                Layout.fillHeight: true
+                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+
+                spacing: 5
+                CustomButton{
+                    id: createTaskButton
+                    text: "Создать задачу"
+                    textSize: root.textSize
+                    Layout.fillWidth: true
+                    onClicked: {
+                        createTaskWindow.open();
+                    }
+                }
+                CustomButton{
+                    id: statistics
+                    text: "Статистика"
+                    textSize: root.textSize
+                    Layout.fillWidth: true
+                    width: innerButtonColumn.width
+                    onClicked: {
+
+                    }
+                }
+                CustomButton{
+                    id: types
+                    text: "Типы задач"
+                    textSize: root.textSize
+                    Layout.fillWidth: true
+                    width: innerButtonColumn.width
+                    onClicked: {
+                        stackView.push("TypesBoard.qml", {
+                            textSize: root.textSize,
+                            stackView: root.stackView,
+                            boardId: root.boardId
+                        })
+                    }
+                }
+                CustomButton{
+                    id: filter
+                    text: "Фильтр"
+                    textSize: root.textSize
+                    Layout.fillWidth: true
+                    width: innerButtonColumn.width
+                    onClicked: {
+
+                    }
+                }
+                CustomButton{
+                    id: exportExcel
+                    text: "Экспорт"
+                    textSize: root.textSize
+                    Layout.fillWidth: true
+                    width: innerButtonColumn.width
+                    onClicked: {
+
+                    }
+                }
+            }
+
+            Rectangle{
+                Layout.alignment: Qt.AlignLeft
+                Layout.fillHeight: true
+                width: 1
+                color: "black"
+            }
+
+            ScrollView {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                contentWidth: availableWidth
+
+                ColumnLayout {
+                    id: tasks
+                    width: parent.width
+                    spacing: 5
+
+                    Repeater {
+                        model: taskModel
+                        delegate: TaskIcon {
+                            Layout.fillWidth: true
+                            Layout.preferredWidth: tasks.width
+                            textSize: root.textSize
+                            taskName: model.name;
+                            description: model.description;
+                            creationTime: model.creationTime;
+                            taskType: model.type;
+                            taskId: model.id;
+                            boardId: root.boardId
+                        }
+                    }
+                }
+            }
+            Rectangle{
+                Layout.alignment: Qt.AlignLeft
+                Layout.fillHeight: true
+                width: 1
+                color: "black"
+            }
+        }
+
+        Item{
+            Layout.fillHeight: true
+        }
+    }
+}

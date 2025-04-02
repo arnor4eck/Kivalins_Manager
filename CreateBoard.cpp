@@ -2,10 +2,7 @@
 #include "GlobalVariables.h"
 #include <QDebug>
 
-CreateBoard::CreateBoard(QObject *parent) : BaseCreate(parent), db(Global::getDatabasePath()) {
-    this->db.createTable("board (board_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(16) UNIQUE NOT NULL, "
-            "description varchar(64), creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-}
+CreateBoard::CreateBoard(QObject *parent) : BaseCreate(parent), db(Global::getDatabasePath()) {}
 
 bool CreateBoard::saveData() {
     if(this->b_name.length() > 16) {
@@ -43,7 +40,6 @@ bool CreateBoard::saveData() {
 
 
     emit boardAdded();
-    qDebug() << b_name << ' ' << b_description;
     return true;
 }
 

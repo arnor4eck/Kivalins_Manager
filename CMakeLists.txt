@@ -24,6 +24,9 @@ set(SOURCES
     BaseCreate.cpp
     CreateBoard.cpp
     GlobalVariables.cpp
+    TaskData.cpp
+    CreateTask.cpp
+    BoardData.cpp
 )
 
 # Список заголовочных файлов
@@ -32,6 +35,11 @@ set(HEADERS
     DataBase.h
     BaseCreate.h
     CreateBoard.h
+    TaskData.h
+    CreateTask.h
+    BoardData.h
+    BoardObject.h
+    TaskObject.h
 )
 
 # Список QML-файлов (все файлы в одном списке)
@@ -45,6 +53,13 @@ set(QML_FILES
     ErrorWindow.qml
     SuccessWindow.qml
     CreateBoardWindow.qml
+    CreateTaskWindow.qml
+    CircularButton.qml
+    BoardPage.qml
+    TaskIcon.qml
+    TaskIconDescriptionWindow.qml
+    BoardIcon.qml
+    BoardIconDescriptionWindow.qml
 )
 
 # Создание исполняемого файла
@@ -59,11 +74,15 @@ qt_add_qml_module(apptestqtstrat
     VERSION 1.0
     QML_FILES ${QML_FILES}
     SOURCES ${HEADERS} ${SOURCES}
-    QML_FILES BoardIcon.qml
-    QML_FILES BoardIconDescriptionWindow.qml
-    SOURCES BoardObject.h
-    SOURCES BoardData.h
-    QML_FILES CircularButton.qml
+    QML_FILES TypesBoard.qml
+    SOURCES TypeObject.h
+    SOURCES TypeData.cpp
+    SOURCES TypeData.h
+    QML_FILES CreateTypeWindow.qml
+    SOURCES CreateType.h
+    SOURCES CreateType.cpp
+    QML_FILES TypeIcon.qml
+    QML_FILES UpdateTaskWindow.qml
 )
 
 # Подключение библиотек

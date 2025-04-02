@@ -5,14 +5,15 @@ import QtQuick.Layouts
 Rectangle {
     id: root
     property int textSize: 24
-    property string boardName: "";
+    property string taskName: "";
     property string description: "";
     property string creationTime: "";
+    property string taskType: "";
+    property int taskId: -1;
     property int boardId: -1;
-    property StackView stackView
 
-    width: 200
-    height: 200
+    Layout.fillWidth: true
+    height: 100
     color: Qt.darker("lightblue", 1.3)
 
     ColumnLayout{
@@ -20,11 +21,15 @@ Rectangle {
         anchors.fill: parent
         spacing: 5
 
-        BoardIconDescriptionWindow{
+        TaskIconDescriptionWindow{
             id: descriptionWindow
             textSize: root.textSize
             description: root.description
             creationTime: root.creationTime
+            taskType: root.taskType
+            taskId: root.taskId
+            boardId: root.boardId
+            name: root.taskName
         }
 
         CircularButton{
@@ -45,26 +50,12 @@ Rectangle {
         Text{
             Layout.alignment: Qt.AlignHCenter
             id: name
-            text: root.boardName
+            text: root.taskName
             font.pixelSize: 24
         }
 
-        CustomButton{
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-            parentColor: root.color
-            Layout.bottomMargin: 5
-            text: "Открыть доску"
-            textSize: root.textSize - 8
-            onClicked: {
-                stackView.push("BoardPage.qml", {
-                    textSize: root.textSize,
-                    stackView: root.stackView,
-                    boardName: root.boardName,
-                    boardId: root.boardId
-                })
-            }
+        Item{
+            Layout.fillHeight: true
         }
-
-
     }
 }
