@@ -32,7 +32,7 @@ QVariant TaskData::data(const QModelIndex& index, int role) const {
 void TaskData::loadTasks(int boardId, int type) {
     SQLite::Statement tasks = db.getData("task", "*",
                                           "board_id = " + std::to_string(boardId) +
-                                              (type != 0 ? "AND type = " + std::to_string(type) : ""));
+                                              (type != 0 ? " AND type_id = " + std::to_string(type) : ""));
 
     while(tasks.executeStep()){
         beginInsertRows(QModelIndex(), rowCount(), rowCount());

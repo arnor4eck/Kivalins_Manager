@@ -13,7 +13,7 @@ Rectangle {
     property int boardId: -1;
 
     Layout.fillWidth: true
-    height: 100
+    height: name.implicitHeight + showDescription.height + 10
     color: Qt.darker("lightblue", 1.3)
 
     ColumnLayout{
@@ -31,27 +31,23 @@ Rectangle {
             boardId: root.boardId
             name: root.taskName
         }
-
-        CircularButton{
-            id: showDescription
-            parentColor: root.color
-            Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            Layout.rightMargin: root.textSize * 0.5
-            Layout.topMargin: root.textSize * 0.5
-
-            text: "?"
-            textSize: root.textSize
-            needsPadding: false
-            onClicked: {
-                descriptionWindow.open()
-            }
-        }
-
         Text{
             Layout.alignment: Qt.AlignHCenter
             id: name
             text: root.taskName
             font.pixelSize: 24
+        }
+
+        CustomButton{
+            id: showDescription
+            parentColor: root.color
+            Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
+            text: "Подробнее"
+            textSize: root.textSize - 8
+            padding: root.textSize - 8
+            onClicked: {
+                descriptionWindow.open()
+            }
         }
 
         Item{

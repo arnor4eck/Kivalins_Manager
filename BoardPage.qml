@@ -46,18 +46,6 @@ Page {
                 font.pixelSize: root.textSize
                 font.weight: Font.DemiBold
             }
-            CircularButton{
-                id: showSettings
-                anchors.right: parent.right
-                parentColor: root.backgroundColor
-                text: ":"
-                textSize: root.textSize
-                needsPadding: false
-
-                onClicked: {
-                    // настройки
-                }
-            }
         }
 
         CreateTaskWindow{
@@ -93,6 +81,8 @@ Page {
                     id: statistics
                     text: "Статистика"
                     textSize: root.textSize
+                    buttonColor: "darkgreen"
+                    textColor: "lightgreen"
                     Layout.fillWidth: true
                     width: innerButtonColumn.width
                     onClicked: {
@@ -113,14 +103,25 @@ Page {
                         })
                     }
                 }
+
+                FilterTasksWindow{
+                    id: filterTasksWindow
+                    textSize: root.textSize;
+                    parentWidth: root.width;
+                    parentHeight: root.height;
+                    boardId: root.boardId;
+                }
+
                 CustomButton{
                     id: filter
                     text: "Фильтр"
                     textSize: root.textSize
                     Layout.fillWidth: true
                     width: innerButtonColumn.width
+                    buttonColor: "darkgreen"
+                    textColor: "lightgreen"
                     onClicked: {
-
+                        filterTasksWindow.open();
                     }
                 }
                 CustomButton{
