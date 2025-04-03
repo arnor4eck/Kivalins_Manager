@@ -84,6 +84,7 @@ qt_add_qml_module(apptestqtstrat
     QML_FILES TypeIcon.qml
     QML_FILES UpdateTaskWindow.qml
     QML_FILES FilterTasksWindow.qml
+    QML_FILES
 )
 
 # Подключение библиотек

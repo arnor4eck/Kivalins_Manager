@@ -41,7 +41,8 @@ void TypeData::loadTypes(int boardId) {
 
 
 void TypeData::deleteType(int typeId, int boardId){
-    db.deleteData("type", "type_id = " + std::to_string(typeId));
+    this->db.db.exec("UPDATE task SET type_id = 1 WHERE type_id = " + std::to_string(typeId));
+    this->db.db.exec("DELETE FROM type WHERE type_id = " + std::to_string(typeId));
 
     refreshModel(boardId);
 }

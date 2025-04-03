@@ -14,6 +14,7 @@ Page {
         taskModel.refreshModel(root.boardId)
     }
 
+
     background: Rectangle{
         id: backgroundRect
         color: root.backgroundColor

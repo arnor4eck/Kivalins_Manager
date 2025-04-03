@@ -38,6 +38,7 @@ Page{
             radius: 0
             parentColor: root.backgroundColor
             onClicked: {
+                taskModel.refreshModel(root.boardId);
                 stackView.pop()
             }
         }

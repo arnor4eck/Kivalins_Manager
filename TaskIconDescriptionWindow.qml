@@ -84,6 +84,7 @@ Popup {
 
                 taskName: root.name
                 taskDescription: root.description
+                typeName: root.taskType
                 taskId: root.taskId;
                 boardId: root.boardId;
             }

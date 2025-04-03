@@ -27,7 +27,7 @@ public:
     QVariant data(const QModelIndex& index, int role) const override;
 
     Q_INVOKABLE void loadTasks(int boardId, int type = 0);
-    Q_INVOKABLE bool updateTask(int boardId, int taskId, QString name, QString description);
+    Q_INVOKABLE bool updateTask(int boardId, int taskId, QString name, QString description, int typeId);
     Q_INVOKABLE void refreshModel(int boardId, int type = 0);
 
 signals:

@@ -51,7 +51,6 @@ void prepareDB(){
                    "creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
                    "FOREIGN KEY (board_id) REFERENCES board(board_id) ON DELETE CASCADE,"
                    "FOREIGN KEY (type_id) REFERENCES type(type_id) ON DELETE SET DEFAULT)");
-
 }
 
 int main(int argc, char *argv[]){

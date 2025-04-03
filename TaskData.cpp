@@ -55,7 +55,7 @@ void TaskData::loadTasks(int boardId, int type) {
     }
 }
 
-bool TaskData::updateTask(int boardId, int taskId, QString name, QString description){
+bool TaskData::updateTask(int boardId, int taskId, QString name, QString description, int typeId){
     if(name.length() > 16) {
         emit showError("Название больше 16 символов");
         return false;
@@ -70,13 +70,17 @@ bool TaskData::updateTask(int boardId, int taskId, QString name, QString descrip
         return false;
     }
 
-    SQLite::Statement query(this->db.db, "UPDATE task SET name = ?, description = ? WHERE task_id = " + std::to_string(taskId));
+    SQLite::Statement query(this->db.db, "UPDATE task SET name = ?, description = ?" + (typeId == 0 ? "" : std::string(", type_id = ?")) + " WHERE task_id = " + std::to_string(taskId));
 
     query.bind(1, name.toStdString());
     if(description.isEmpty()){
         query.bind(2);
     }else{
         query.bind(2, description.toStdString());
+    }
+
+    if(typeId != 0){
+        query.bind(3, typeId);
     }
 
     query.exec();
