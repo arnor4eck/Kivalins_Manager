@@ -3,25 +3,27 @@ import QtQuick.Controls
 
 Popup {
     id: root
-    property int textSize: 24
-    property int proportion: (root.textSize == 24 ? 4 : 2);
+    required property int textSize
 
     anchors.centerIn: Overlay.overlay
-    width: parent.width / root.proportion
-    height: parent.width / root.proportion
+    width: Math.max(nameField.implicitWidth, descriptionField.implicitWidth, saveButton.width) + 30
+    height: nameField.implicitHeight + descriptionField.implicitHeight + saveButton.height + 100;
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     Rectangle {
+        id: rect
         anchors.fill: parent
         color: Qt.darker("lightblue", 1.3)
         radius: 5
         ErrorWindow{
+            textSize: root.textSize
             id: error
         }
 
         SuccessWindow{
             id: success
+            textSize: root.textSize
         }
 
         Column {
@@ -30,15 +32,24 @@ Popup {
 
             TextField {
                 id: nameField
+                height: root.textSize
+                width: saveButton.width
+                font.pointSize: 24 / (root.textSize == 24 ? 2 : 1)
                 placeholderText: "Название доски"
             }
 
             TextField {
                 id: descriptionField
+                height: root.textSize
+                width: saveButton.width
+                font.pointSize: 24 / (root.textSize == 24 ? 2 : 1)
                 placeholderText: "Описание доски"
             }
 
-            Button {
+            CustomButton {
+                id: saveButton
+                parentColor: rect.color
+                textSize: root.textSize
                 text: "Сохранить"
                 onClicked: {
                     createBoardObject.setName(nameField.text)

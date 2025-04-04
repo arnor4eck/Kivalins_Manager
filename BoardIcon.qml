@@ -11,8 +11,8 @@ Rectangle {
     property int boardId: -1;
     property StackView stackView
 
-    width: 200
-    height: 200
+    width: Math.max(200, name.implicitWidth, showDescription.width, openBoardPage.width) + 30
+    height: name.implicitHeight + showDescription.height + openBoardPage.height + 60
     color: Qt.darker("lightblue", 1.3)
 
     ColumnLayout{
@@ -46,10 +46,11 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
             id: name
             text: root.boardName
-            font.pixelSize: 24
+            font.pixelSize: root.textSize
         }
 
         CustomButton{
+            id: openBoardPage
             Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
             parentColor: root.color
             Layout.bottomMargin: 5

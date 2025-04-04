@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 Popup {
     id: root
     property alias errorText: errorMessage.text
-    property int textSize: 24
+    required property int textSize
 
     anchors.centerIn: Overlay.overlay
     width: Math.max(parent.width / 4, errorMessage.implicitWidth + 40)

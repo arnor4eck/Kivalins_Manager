@@ -3,10 +3,7 @@ import QtQuick.Controls
 
 Popup {
     id: root
-    property int textSize: 24
-    property int proportion: (root.textSize == 24 ? 2 : 1);
-    property int parentWidth: 0;
-    property int parentHeight: 0;
+    required property int textSize
     property string taskName: "";
     property string taskDescription: ""
     property string typeName: ""
@@ -20,17 +17,21 @@ Popup {
     }
 
     anchors.centerIn: Overlay.overlay
-    width: root.parentWidth / root.proportion + (root.textSize == 24 ? 30 : 0)
-    height: root.parentWidth / root.proportion + (root.textSize == 24 ? 30 : 0)
+    width: Math.max(nameField.implicitWidth, descriptionField.implicitWidth,
+                    typeCombo.implicitWidth, saveButton.width) + 30
+    height: nameField.height + descriptionField.height + typeCombo.height + saveButton.height + 50
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     Rectangle {
+        id: rect
         anchors.fill: parent
         color: Qt.darker("lightblue", 1.3)
         radius: 5
+
         ErrorWindow{
             id: error
+            textSize: root.textSize
         }
 
         Column {
@@ -39,14 +40,19 @@ Popup {
 
             TextField {
                 id: nameField
+                height: root.textSize
                 text: root.taskName;
+                width: saveButton.width
+                font.pointSize: 24 / (root.textSize == 24 ? 2 : 1)
                 placeholderText: "Название задачи"
             }
 
             TextField {
                 id: descriptionField
                 width: nameField.width
+                height: root.textSize
                 text: (root.taskDescription != "Описание отсутствует" ? root.taskDescription : "");
+                font.pointSize: 24 / (root.textSize == 24 ? 2 : 1)
                 placeholderText: "Описание задачи"
             }
 
@@ -56,7 +62,7 @@ Popup {
                 textRole: "name"
                 valueRole: "id"
                 width: descriptionField.width
-
+                height: root.textSize
 
                 property string selectedDisplayText: root.typeName
 
@@ -79,11 +85,14 @@ Popup {
                 }
             }
 
-            Button {
+            CustomButton {
+                id: saveButton
+                parentColor: rect.color
                 text: "Сохранить"
                 onClicked: {
                     if (taskModel.updateTask(root.boardId, root.taskId, nameField.text,
                                 descriptionField.text, (wasClicked ? typeCombo.currentValue : 0))){
+                        console.log(root.textSize);
                         root.close();
                     }
                 }

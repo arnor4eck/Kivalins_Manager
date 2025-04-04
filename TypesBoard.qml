@@ -27,8 +27,6 @@ Page{
             id: createType
             textSize: root.textSize
             boardId: root.boardId
-            parentWidth: root.width
-            parentHeight: root.height
         }
 
         CustomButton{

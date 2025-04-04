@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 Popup {
     id: root
-    property int textSize: 24
+    required property int textSize
     property string name: ""
     property string description: ""
     property string creationTime: ""
@@ -16,8 +16,9 @@ Popup {
     width: Math.max(description.implicitWidth, constDesc.implicitWidth,
                     constCreate.implicitWidth, constCreate.implicitWidth,
                     creationTime.implicitWidth, constType.implicitWidth, taskTypeText.implicitWidth) + 40
-    height: description.implicitHeight + 50 + constDesc.implicitHeight +
-            constCreate.implicitHeight + creationTime.implicitHeight + button.height + constType.implicitHeight + taskTypeText.implicitHeight
+    height: description.implicitHeight + constDesc.implicitHeight +
+            constCreate.implicitHeight + creationTime.implicitHeight +
+            button.height + constType.implicitHeight + taskTypeText.implicitHeight + 50
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -79,8 +80,6 @@ Popup {
                 id: updateTask
                 textSize: root.textSize
 
-                parentWidth: root.width
-                parentHeight: root.height
 
                 taskName: root.name
                 taskDescription: root.description

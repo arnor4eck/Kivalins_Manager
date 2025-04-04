@@ -52,9 +52,7 @@ Page {
         CreateTaskWindow{
             id: createTaskWindow
             textSize: root.textSize
-            parentWidth: root.width;
-            parentHeight: root.height;
-            boardId: root.boardId;
+            boardId: root.boardId
         }
 
         RowLayout{

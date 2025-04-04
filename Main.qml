@@ -3,8 +3,8 @@ import QtQuick.Controls
 
 Window {
     id: window
-    width: 640
-    height: 480
+    width: 640 * (window.textSize == 24 ? 1 : 2)
+    height: 480 * (window.textSize == 24 ? 1 : 2)
     visible: true
     title: qsTr("Kivalin`s Manager")
 

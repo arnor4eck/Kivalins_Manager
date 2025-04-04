@@ -35,7 +35,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
             id: name
             text: root.taskName
-            font.pixelSize: 24
+            font.pixelSize: root.textSize
         }
 
         CustomButton{

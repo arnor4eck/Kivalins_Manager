@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 Popup {
     id: root
-    property int textSize: 24;
+    required property int textSize
     property int parentWidth: 0;
     property int parentHeight: 0;
     property int boardId: 0;
@@ -14,8 +14,8 @@ Popup {
     }
 
     anchors.centerIn: Overlay.overlay
-    width: root.parentWidth / (textSize == 24 ? 2 : 1);
-    height: root.parentHeight / (textSize == 24 ? 2 : 1);
+    width: root.parentWidth / 2;
+    height: root.parentHeight / 2;
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -45,7 +45,7 @@ Popup {
                         color: Qt.darker("lightblue", 1.5)
                         border.color: "black"
                         border.width: 2
-                        height: 120
+                        height: typeName.implicitHeight + chooseButton.height + 20
 
 
                         ColumnLayout{
@@ -54,12 +54,14 @@ Popup {
                             Layout.fillWidth: true
                             spacing: 5
                             Text{
+                                id: typeName
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                                 text: model.name
                                 font.pixelSize: root.textSize
                             }
 
                             CustomButton{
+                                id: chooseButton
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                                 parentColor: rect.color
                                 text: "Выбрать"
