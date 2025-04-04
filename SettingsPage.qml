@@ -25,7 +25,8 @@ Page{
             parentColor: root.backgroundColor
             textSize: root.textSize
             onClicked: {
-                console.log("сделай")
+                window.visibilit = (window.visibilit ? false : true);
+                stackView.pop();
             }
         }
 

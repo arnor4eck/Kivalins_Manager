@@ -92,7 +92,6 @@ Popup {
                 onClicked: {
                     if (taskModel.updateTask(root.boardId, root.taskId, nameField.text,
                                 descriptionField.text, (wasClicked ? typeCombo.currentValue : 0))){
-                        console.log(root.textSize);
                         root.close();
                     }
                 }

@@ -9,7 +9,8 @@ Window {
     title: qsTr("Kivalin`s Manager")
 
     property color backgroundColor: "lightblue"
-    property int textSize: 24
+    property bool visibilit: false
+    property int textSize: (visibilit ? 48 : 24)
 
     StackView{
         id: stackView
