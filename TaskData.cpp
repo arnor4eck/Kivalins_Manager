@@ -90,6 +90,20 @@ bool TaskData::updateTask(int boardId, int taskId, QString name, QString descrip
     return true;
 }
 
+int TaskData::getCreatedCount(int boardId){
+    SQLite::Statement allTasks = this->db.getData("task", "COUNT(*)", "board_id = " + std::to_string(boardId));
+    if(allTasks.executeStep()){}
+
+    return allTasks.getColumn(0).getInt();
+}
+
+int TaskData::getDoneCount(int boardId){
+    SQLite::Statement doneTasks = this->db.getData("task", "COUNT(*)", "type_id = 2 AND board_id = " + std::to_string(boardId));
+    if(doneTasks.executeStep()){}
+
+    return doneTasks.getColumn(0).getInt();
+}
+
 void TaskData::refreshModel(int boardId, int type){
     beginResetModel();
 

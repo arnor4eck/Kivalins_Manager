@@ -76,6 +76,13 @@ Page {
                         createTaskWindow.open();
                     }
                 }
+
+                StatisticsWindow{
+                    id: statWindow
+                    textSize: root.textSize
+                    boardId: root.boardId
+                }
+
                 CustomButton{
                     id: statistics
                     text: "Статистика"
@@ -84,8 +91,11 @@ Page {
                     textColor: "lightgreen"
                     Layout.fillWidth: true
                     width: innerButtonColumn.width
-                    onClicked: {
 
+                    onClicked: {
+                        statWindow.createdTasks = taskModel.getCreatedCount(root.boardId)
+                        statWindow.doneTasks = taskModel.getDoneCount(root.boardId)
+                        statWindow.open();
                     }
                 }
                 CustomButton{

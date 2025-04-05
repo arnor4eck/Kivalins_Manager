@@ -60,6 +60,7 @@ set(QML_FILES
     TaskIconDescriptionWindow.qml
     BoardIcon.qml
     BoardIconDescriptionWindow.qml
+    StatisticsWindow.qml
 )
 
 # Создание исполняемого файла

@@ -23,12 +23,15 @@ public:
 
     explicit TaskData(QObject* parent = nullptr) : QAbstractListModel(parent), db(Global::getDatabasePath()) {}
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex& index, int role) const override;
 
     Q_INVOKABLE void loadTasks(int boardId, int type = 0);
     Q_INVOKABLE bool updateTask(int boardId, int taskId, QString name, QString description, int typeId);
     Q_INVOKABLE void refreshModel(int boardId, int type = 0);
+    Q_INVOKABLE int getCreatedCount(int boardId);
+    Q_INVOKABLE int getDoneCount(int boardId);
 
 signals:
     void showError(const QString &message);

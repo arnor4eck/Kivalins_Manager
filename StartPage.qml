@@ -15,7 +15,7 @@ Page{
     Row {
         id: buttonsRow
         anchors.centerIn: parent
-        spacing: 10  // Расстояние между кнопками
+        spacing: 10
 
         CustomButton {
             id: myBoards
