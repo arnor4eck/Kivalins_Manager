@@ -7,15 +7,18 @@ Popup {
     required property int textSize
     property string description: ""
     property alias creationTime: creationTime.text
+    property int boardId: -1
 
     anchors.centerIn: Overlay.overlay
     width: Math.max(description.implicitWidth, constDesc.implicitWidth,
-                    constCreate.implicitWidth, constCreate.implicitWidth, creationTime.implicitWidth) + 40
-    height: description.implicitHeight + 30 + constDesc.implicitHeight + constCreate.implicitHeight + creationTime.implicitHeight
+                    constCreate.implicitWidth, constCreate.implicitWidth, creationTime.implicitWidth, deleteButton.width) + 40
+    height: description.implicitHeight + 50 + constDesc.implicitHeight +
+            constCreate.implicitHeight + creationTime.implicitHeight + deleteButton.height
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     Rectangle {
+        id: rect
         anchors.fill: parent
         color: Qt.darker("lightblue", 1.3)
         radius: 5
@@ -52,6 +55,23 @@ Popup {
                 text: "22-12-2222 21:21:21"
                 font.pixelSize: root.textSize
             }
+
+            CustomButton{
+                id: deleteButton
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                parentColor: rect.color
+                buttonColor: "red"
+                textColor: "black"
+
+                text: "Удалить"
+                textSize: root.textSize
+
+                onClicked: {
+                    boardModel.deleteBoard(root.boardId);
+                    root.close();
+                }
+            }
+
             Item{
                 Layout.fillHeight: true
             }

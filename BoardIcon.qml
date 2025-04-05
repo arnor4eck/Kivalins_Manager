@@ -25,6 +25,7 @@ Rectangle {
             textSize: root.textSize
             description: root.description
             creationTime: root.creationTime
+            boardId: root.boardId
         }
 
         CircularButton{

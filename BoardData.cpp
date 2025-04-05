@@ -44,6 +44,14 @@ void BoardData::addBoards() {
     }
 }
 
+void BoardData::deleteBoard(int boardId){
+    this->db.deleteData("task", "board_id = " + std::to_string(boardId));
+    this->db.deleteData("type", "board_id = " + std::to_string(boardId));
+    this->db.deleteData("board", "board_id = " + std::to_string(boardId));
+
+    refreshModel();
+}
+
 void BoardData::refreshModel(){
     beginResetModel();
 

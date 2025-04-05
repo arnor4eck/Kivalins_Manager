@@ -27,6 +27,7 @@ public:
     void addBoards();
 
     Q_INVOKABLE void refreshModel();
+    Q_INVOKABLE void deleteBoard(int boardId);
 
 signals:
     void modelUpdated();  // Сигнал об обновлении

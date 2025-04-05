@@ -68,6 +68,32 @@ Popup {
 
                 displayText: selectedDisplayText
 
+                popup: Popup { // скроллбар
+                    y: typeCombo.height
+                    width: typeCombo.width
+                    implicitHeight: Math.min(contentItem.implicitHeight, 200)
+                    padding: 1
+
+                    contentItem: ListView {
+                        clip: true
+                        implicitHeight: contentHeight
+                        model: typeCombo.popup.visible ? typeCombo.delegateModel : null
+                        currentIndex: typeCombo.highlightedIndex
+
+                        ScrollBar.vertical: ScrollBar {
+                            policy: ScrollBar.AsNeeded
+                        }
+
+                        boundsBehavior: Flickable.StopAtBounds
+                        snapMode: ListView.SnapToItem
+                    }
+
+                    background: Rectangle {
+                        border.color: "#21be2b"
+                        radius: 2
+                    }
+                }
+
                 delegate: ItemDelegate {
                     width: typeCombo.width
                     height: 40
