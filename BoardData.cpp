@@ -1,4 +1,8 @@
 #include "BoardData.h"
+#include <fstream>
+#include <locale>
+#include <codecvt> // Для работы с кодировками
+#include <QDebug>
 
 int BoardData::rowCount(const QModelIndex& parent) const {
     Q_UNUSED(parent);
@@ -42,6 +46,33 @@ void BoardData::addBoards() {
 
         endInsertRows();
     }
+}
+
+void BoardData::exportBoard(QString name, int boardId){
+    SQLite::Statement tasks = this->db.getData("task", "*", "board_id = " + std::to_string(boardId));
+
+    // Открываем файл в бинарном режиме с UTF-8 кодировкой
+    std::ofstream out;
+    out.open((Global::getProjectPath() + "\\" + name.toStdString() + ".csv").c_str(),
+             std::ios::out | std::ios::binary);
+
+    // Добавляем BOM (маркер последовательности байтов) для UTF-8
+    out << "\xEF\xBB\xBF";
+
+    out << "Название;Описание;Дата создания;Тип\n";
+
+
+    while(tasks.executeStep()){
+        out << tasks.getColumn(3).getString() << ';'
+            << ( tasks.getColumn(4).getString().size() == 0 ? "" : tasks.getColumn(4).getString()) << ';'
+            << tasks.getColumn(5).getString() << ';';
+        SQLite::Statement type = this->db.getData("type", "*", "type_id = " + tasks.getColumn(2).getString());
+        if(type.executeStep()){
+            out << type.getColumn(2) << '\n';
+        }
+    }
+
+    out.close();
 }
 
 void BoardData::deleteBoard(int boardId){

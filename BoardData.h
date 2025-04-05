@@ -28,6 +28,7 @@ public:
 
     Q_INVOKABLE void refreshModel();
     Q_INVOKABLE void deleteBoard(int boardId);
+    Q_INVOKABLE void exportBoard(QString name, int boardId);
 
 signals:
     void modelUpdated();  // Сигнал об обновлении

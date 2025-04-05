@@ -17,10 +17,11 @@ void prepareGlobalVariables(char *argv[]){
     Global::setProjectName("testqtstrat");
 
     std::filesystem::path exePath = argv[0];
-
     std::string thisPath = exePath.string();
     thisPath.erase(thisPath.begin() + thisPath.find(Global::getProjectName()), thisPath.end());
-    Global::setDatabasePath(thisPath + Global::getProjectName() + "\\manager.db");
+
+    Global::setProjectPath(thisPath + Global::getProjectName());
+    Global::setDatabasePath(Global::getProjectPath() + "\\manager.db");
 }
 
 void prepareDB(){
@@ -55,6 +56,7 @@ void prepareDB(){
 
 int main(int argc, char *argv[]){
     QGuiApplication app(argc, argv);
+
     prepareGlobalVariables(argv);
     prepareDB();
 

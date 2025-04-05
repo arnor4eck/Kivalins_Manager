@@ -4,9 +4,18 @@
 namespace {
     std::string databasePath;
     std::string projectName;
+    std::string projectPath;
 }
 
 namespace Global {
+    void setProjectPath(const std::string& path){
+        projectPath = path;
+    }
+
+    const std::string& getProjectPath(){
+        return projectPath;
+    }
+
     void setDatabasePath(const std::string& path) {
         databasePath = path;
     }

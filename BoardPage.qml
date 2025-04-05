@@ -123,6 +123,11 @@ Page {
                         filterTasksWindow.open();
                     }
                 }
+                SuccessWindow{
+                    id: success
+                    textSize: root.textSize
+                }
+
                 CustomButton{
                     id: exportExcel
                     text: "Экспорт"
@@ -130,7 +135,10 @@ Page {
                     Layout.fillWidth: true
                     width: innerButtonColumn.width
                     onClicked: {
+                        boardModel.exportBoard(root.boardName, root.boardId);
 
+                        success.text = "Данные экспортированы!";
+                        success.open();
                     }
                 }
             }
