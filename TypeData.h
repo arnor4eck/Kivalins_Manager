@@ -2,6 +2,7 @@
 #define TYPEDATA_H
 #include <QAbstractListModel>
 #include <vector>
+
 #include "GlobalVariables.h"
 #include "TypeObject.h"
 #include "DataBase.h"

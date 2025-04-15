@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(testqtstrat VERSION 0.1 LANGUAGES CXX)
+project(Kivalins_Manager VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,7 +8,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-# Поиск Qt6 компонентов
 find_package(Qt6 REQUIRED COMPONENTS Quick Qml Core)
 
 # SQLite
@@ -17,7 +16,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SQLiteCpp/include)
 
 qt_standard_project_setup()
 
-# Список исходных файлов
 set(SOURCES
     DataBase.cpp
     main.cpp
@@ -29,7 +27,6 @@ set(SOURCES
     BoardData.cpp
 )
 
-# Список заголовочных файлов
 set(HEADERS
     GlobalVariables.h
     DataBase.h
@@ -42,7 +39,6 @@ set(HEADERS
     TaskObject.h
 )
 
-# Список QML-файлов (все файлы в одном списке)
 set(QML_FILES
     Main.qml
     StartPage.qml
@@ -63,15 +59,13 @@ set(QML_FILES
     StatisticsWindow.qml
 )
 
-# Создание исполняемого файла
-qt_add_executable(apptestqtstrat
+qt_add_executable(appKivalins_Manager
     ${SOURCES}
     ${HEADERS}
 )
 
-# Добавление QML модуля (правильный формат)
-qt_add_qml_module(apptestqtstrat
-    URI testqtstrat
+qt_add_qml_module(appKivalins_Manager
+    URI Kivalins_Manager
     VERSION 1.0
     QML_FILES ${QML_FILES}
     SOURCES ${HEADERS} ${SOURCES}
@@ -88,8 +82,7 @@ qt_add_qml_module(apptestqtstrat
     QML_FILES
 )
 
-# Подключение библиотек
-target_link_libraries(apptestqtstrat
+target_link_libraries(appKivalins_Manager
     PRIVATE
         Qt6::Quick
         Qt6::Qml
@@ -98,10 +91,13 @@ target_link_libraries(apptestqtstrat
         sqlite3
 )
 
-# Установка
 include(GNUInstallDirs)
-install(TARGETS apptestqtstrat
+install(TARGETS appKivalins_Manager
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+if(MINGW)
+    add_compile_options(-std=c++17)
+endif()

@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <string>
+#include <filesystem>
 
 #include "CreateBoard.h"
 #include "CreateTask.h"
@@ -14,7 +15,7 @@
 #include "CreateType.h"
 
 void prepareGlobalVariables(char *argv[]){
-    Global::setProjectName("testqtstrat");
+    Global::setProjectName("Kivalins_Manager");
 
     std::filesystem::path exePath = argv[0];
     std::string thisPath = exePath.string();
@@ -94,7 +95,7 @@ int main(int argc, char *argv[]){
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("testqtstrat", "Main");
+    engine.loadFromModule("Kivalins_Manager", "Main");
 
 
     return app.exec();

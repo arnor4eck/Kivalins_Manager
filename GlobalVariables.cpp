@@ -1,5 +1,4 @@
 #include "GlobalVariables.h"
-#include <filesystem>
 
 namespace {
     std::string databasePath;

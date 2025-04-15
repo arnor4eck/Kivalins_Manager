@@ -1,7 +1,5 @@
 #include "BoardData.h"
 #include <fstream>
-#include <locale>
-#include <codecvt> // Для работы с кодировками
 #include <QDebug>
 
 int BoardData::rowCount(const QModelIndex& parent) const {
@@ -51,15 +49,14 @@ void BoardData::addBoards() {
 void BoardData::exportBoard(QString name, int boardId){
     SQLite::Statement tasks = this->db.getData("task", "*", "board_id = " + std::to_string(boardId));
 
-    // Открываем файл в бинарном режиме с UTF-8 кодировкой
     std::ofstream out;
-    out.open((Global::getProjectPath() + "\\" + name.toStdString() + ".csv").c_str(),
+    std::wstring fileName = name.toStdWString();
+    out.open((Global::getProjectPath() + "\\" + std::string(fileName.begin(), fileName.end()) + ".csv").c_str(),
              std::ios::out | std::ios::binary);
 
-    // Добавляем BOM (маркер последовательности байтов) для UTF-8
     out << "\xEF\xBB\xBF";
 
-    out << "Название;Описание;Дата создания;Тип\n";
+    out << "Task;Description;Creation Date;Task type\n";
 
 
     while(tasks.executeStep()){

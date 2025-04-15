@@ -2,6 +2,7 @@
 #define BOARDDATA_H
 #include <QAbstractListModel>
 #include <vector>
+
 #include "GlobalVariables.h"
 #include "BoardObject.h"
 #include "DataBase.h"
@@ -31,7 +32,7 @@ public:
     Q_INVOKABLE void exportBoard(QString name, int boardId);
 
 signals:
-    void modelUpdated();  // Сигнал об обновлении
+    void modelUpdated();
 };
 
 #endif // BOARDDATA_H

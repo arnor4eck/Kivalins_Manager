@@ -2,6 +2,7 @@
 #define TASKDATA_H
 #include <QAbstractListModel>
 #include <vector>
+
 #include "GlobalVariables.h"
 #include "TaskObject.h"
 #include "DataBase.h"

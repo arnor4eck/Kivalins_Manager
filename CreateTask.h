@@ -1,9 +1,9 @@
 #ifndef CREATETASK_H
 #define CREATETASK_H
+#include <QString>
 
 #include "BaseCreate.h"
 #include "DataBase.h"
-#include <QString>
 
 class CreateTask : public BaseCreate {
     Q_OBJECT

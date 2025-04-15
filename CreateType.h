@@ -1,8 +1,10 @@
 #ifndef CREATETYPE_H
 #define CREATETYPE_H
+#include <QString>
+
 #include "BaseCreate.h"
 #include "DataBase.h"
-#include <QString>
+
 
 class CreateType : public BaseCreate {
     Q_OBJECT

@@ -1,9 +1,10 @@
 #ifndef CREATEBOARD_H
 #define CREATEBOARD_H
+#include <QString>
 
 #include "BaseCreate.h"
 #include "DataBase.h"
-#include <QString>
+
 
 class CreateBoard : public BaseCreate {
     Q_OBJECT
