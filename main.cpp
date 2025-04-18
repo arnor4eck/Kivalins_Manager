@@ -29,7 +29,7 @@ void prepareDB(){
     DataBase db(Global::getDatabasePath());
     db.exec("PRAGMA foreign_keys = ON;");
     db.createTable("board (board_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(16) UNIQUE NOT NULL, "
-                   "description varchar(64), creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+                   "description varchar(64), creation_time TIMESTAMP DEFAULT (datetime('now', 'localtime')))");
 
     if(!(db.getData("board", "*", "board_id = 1").executeStep()))
         db.addData("board", "name, description", "'base_board', 'base_board'");
@@ -50,7 +50,7 @@ void prepareDB(){
                    "type_id INTEGER NOT NULL DEFAULT 1,"
                    "name varchar(16) NOT NULL,"
                    "description varchar(64), "
-                   "creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
+                   "creation_time TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
                    "FOREIGN KEY (board_id) REFERENCES board(board_id) ON DELETE CASCADE,"
                    "FOREIGN KEY (type_id) REFERENCES type(type_id) ON DELETE SET DEFAULT)");
 }

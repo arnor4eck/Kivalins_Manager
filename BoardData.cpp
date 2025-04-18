@@ -50,8 +50,7 @@ void BoardData::exportBoard(QString name, int boardId){
     SQLite::Statement tasks = this->db.getData("task", "*", "board_id = " + std::to_string(boardId));
 
     std::ofstream out;
-    std::wstring fileName = name.toStdWString();
-    out.open((Global::getProjectPath() + "\\" + std::string(fileName.begin(), fileName.end()) + ".csv").c_str(),
+    out.open((Global::getProjectPath() + "\\" + name.toStdString() + ".csv").c_str(),
              std::ios::out | std::ios::binary);
 
     out << "\xEF\xBB\xBF";
