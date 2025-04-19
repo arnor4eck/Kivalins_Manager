@@ -1,5 +1,8 @@
 #include "BoardData.h"
 #include <fstream>
+#include <chrono>
+#include <ctime>
+#include <algorithm>
 #include <QDebug>
 
 int BoardData::rowCount(const QModelIndex& parent) const {
@@ -46,11 +49,16 @@ void BoardData::addBoards() {
     }
 }
 
-void BoardData::exportBoard(QString name, int boardId){
+void BoardData::exportBoard(int boardId){
     SQLite::Statement tasks = this->db.getData("task", "*", "board_id = " + std::to_string(boardId));
 
+    std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::ofstream out;
-    out.open((Global::getProjectPath() + "\\" + name.toStdString() + ".csv").c_str(),
+
+    std::string curTime = std::string(std::ctime(&now)).substr(0, 10);
+    std::replace(curTime.begin(), curTime.end(), ' ', '_');
+
+    out.open((Global::getProjectPath() + "\\" + std::to_string(boardId) + "_" + curTime  + ".csv").c_str(),
              std::ios::out | std::ios::binary);
 
     out << "\xEF\xBB\xBF";

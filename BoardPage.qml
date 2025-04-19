@@ -145,7 +145,7 @@ Page {
                     Layout.fillWidth: true
                     width: innerButtonColumn.width
                     onClicked: {
-                        boardModel.exportBoard(root.boardName, root.boardId);
+                        boardModel.exportBoard(root.boardId);
 
                         success.text = "Данные экспортированы!";
                         success.open();
