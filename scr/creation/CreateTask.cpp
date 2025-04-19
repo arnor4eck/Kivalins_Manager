@@ -1,5 +1,5 @@
 #include "CreateTask.h"
-#include "GlobalVariables.h"
+#include "scr/dto/GlobalVariables.h"
 #include <QDebug>
 
 CreateTask::CreateTask(QObject *parent) : BaseCreate(parent), db(Global::getDatabasePath()) {}

@@ -1,5 +1,5 @@
 #include "CreateType.h"
-#include "GlobalVariables.h"
+#include "scr/dto/GlobalVariables.h"
 #include <QDebug>
 
 CreateType::CreateType(QObject *parent) : BaseCreate(parent), db(Global::getDatabasePath()) {}

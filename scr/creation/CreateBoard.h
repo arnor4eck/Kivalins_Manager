@@ -3,7 +3,7 @@
 #include <QString>
 
 #include "BaseCreate.h"
-#include "DataBase.h"
+#include "./scr/database/DataBase.h"
 
 
 class CreateBoard : public BaseCreate {

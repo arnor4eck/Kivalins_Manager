@@ -17,26 +17,31 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SQLiteCpp/include)
 qt_standard_project_setup()
 
 set(SOURCES
-    DataBase.cpp
+    scr/database/DataBase.cpp
     main.cpp
-    BaseCreate.cpp
-    CreateBoard.cpp
-    GlobalVariables.cpp
-    TaskData.cpp
-    CreateTask.cpp
-    BoardData.cpp
+    scr/creation/BaseCreate.cpp
+    scr/creation/CreateBoard.cpp
+    scr/dto/GlobalVariables.cpp
+    scr/data/TaskData.cpp
+    scr/creation/CreateTask.cpp
+    scr/data/BoardData.cpp
+    scr/data/TypeData.cpp
+    scr/creation/CreateType.cpp
 )
 
 set(HEADERS
-    GlobalVariables.h
-    DataBase.h
-    BaseCreate.h
-    CreateBoard.h
-    TaskData.h
-    CreateTask.h
-    BoardData.h
-    BoardObject.h
-    TaskObject.h
+    scr/dto/GlobalVariables.h
+    scr/database/DataBase.h
+    scr/creation/BaseCreate.h
+    scr/creation/CreateBoard.h
+    scr/data/TaskData.h
+    scr/creation/CreateTask.h
+    scr/data/BoardData.h
+    scr/object/BoardObject.h
+    scr/object/TaskObject.h
+    scr/object/TypeObject.h
+    scr/data/TypeData.h
+    scr/creation/CreateType.h
 )
 
 set(QML_FILES
@@ -74,11 +79,6 @@ qt_add_qml_module(appKivalins_Manager
     VERSION 1.0
     QML_FILES ${QML_FILES}
     SOURCES ${HEADERS} ${SOURCES}
-    SOURCES TypeObject.h
-    SOURCES TypeData.cpp
-    SOURCES TypeData.h
-    SOURCES CreateType.h
-    SOURCES CreateType.cpp
 )
 
 target_link_libraries(appKivalins_Manager

@@ -1,5 +1,5 @@
 #include "CreateBoard.h"
-#include "GlobalVariables.h"
+#include "scr/dto/GlobalVariables.h"
 #include <QDebug>
 
 CreateBoard::CreateBoard(QObject *parent) : BaseCreate(parent), db(Global::getDatabasePath()) {}

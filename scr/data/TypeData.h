@@ -3,9 +3,9 @@
 #include <QAbstractListModel>
 #include <vector>
 
-#include "GlobalVariables.h"
-#include "TypeObject.h"
-#include "DataBase.h"
+#include "scr/dto/GlobalVariables.h"
+#include "scr/object/TypeObject.h"
+#include "./scr/database/DataBase.h"
 
 
 class TypeData : public QAbstractListModel {

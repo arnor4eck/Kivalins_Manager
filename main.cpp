@@ -4,15 +4,15 @@
 #include <string>
 #include <filesystem>
 
-#include "CreateBoard.h"
-#include "CreateTask.h"
-#include "GlobalVariables.h"
-#include "BoardObject.h"
-#include "BoardData.h"
-#include "TaskObject.h"
-#include "TaskData.h"
-#include "TypeData.h"
-#include "CreateType.h"
+#include "scr/creation/CreateBoard.h"
+#include "scr/creation/CreateTask.h"
+#include "scr/dto/GlobalVariables.h"
+#include "scr/object/BoardObject.h"
+#include "scr/data/BoardData.h"
+#include "scr/object/TaskObject.h"
+#include "scr/data/TaskData.h"
+#include "scr/data/TypeData.h"
+#include "scr/creation/CreateType.h"
 
 void prepareGlobalVariables(char *argv[]){
     Global::setProjectName("Kivalins_Manager");

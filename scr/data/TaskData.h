@@ -3,9 +3,9 @@
 #include <QAbstractListModel>
 #include <vector>
 
-#include "GlobalVariables.h"
-#include "TaskObject.h"
-#include "DataBase.h"
+#include "scr/dto/GlobalVariables.h"
+#include "scr/object/TaskObject.h"
+#include "./scr/database/DataBase.h"
 
 
 class TaskData : public QAbstractListModel {
