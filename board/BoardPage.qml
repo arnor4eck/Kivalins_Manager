@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import "../dto"
+import "../task"
 
 Page {
     id: root
@@ -105,7 +107,7 @@ Page {
                     Layout.fillWidth: true
                     width: innerButtonColumn.width
                     onClicked: {
-                        stackView.push("TypesBoard.qml", {
+                        stackView.push("../type/TypesBoard.qml", {
                             textSize: root.textSize,
                             stackView: root.stackView,
                             boardId: root.boardId

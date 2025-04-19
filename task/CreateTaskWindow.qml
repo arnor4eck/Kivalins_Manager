@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import "../dto"
 
 Popup {
     id: root
@@ -7,8 +8,8 @@ Popup {
     property int boardId: -1;
 
     anchors.centerIn: Overlay.overlay
-    width: Math.max(nameField.implicitWidth, createButton.width) + 30
-    height: nameField.implicitHeight + createButton.height + 50
+    width: Math.max(nameField.implicitWidth, descriptionField.implicitWidth, createButton.width) + 30
+    height: nameField.implicitHeight + descriptionField.implicitHeight + createButton.height + 50
 
     modal: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -18,8 +19,8 @@ Popup {
         color: Qt.darker("lightblue", 1.3)
         radius: 5
         ErrorWindow{
-            id: error
             textSize: root.textSize
+            id: error
         }
 
         SuccessWindow{
@@ -36,31 +37,40 @@ Popup {
                 height: root.textSize
                 width: createButton.width
                 font.pointSize: 24 / (root.textSize == 24 ? 2 : 1)
-                placeholderText: "Название типа"
+                placeholderText: "Название задачи"
+            }
+
+            TextField {
+                id: descriptionField
+                height: root.textSize
+                width: createButton.width
+                font.pointSize: 24 / (root.textSize == 24 ? 2 : 1)
+                placeholderText: "Описание задачи"
             }
 
             CustomButton {
                 id: createButton
                 text: "Сохранить"
-                textSize: root.textSize
                 parentColor: rect.color
                 onClicked: {
-                    createTypeObject.setName(nameField.text)
-                    createTypeObject.setBoardId(root.boardId)
-                    if (createTypeObject.saveData()) {
+                    createTaskObject.setName(nameField.text)
+                    createTaskObject.setDescription(descriptionField.text)
+                    createTaskObject.setBoardId(root.boardId)
+                    if (createTaskObject.saveData()) {
                         nameField.text = '';
+                        descriptionField.text = '';
 
-                        success.text = "Тип задачи создан!";
+                        success.text = "Задача создана!";
                         success.textSize = root.textSize
                         success.open();
-                        typeModel.refreshModel(boardId);
+                        taskModel.refreshModel(boardId);
                         root.close();
                     }
                 }
             }
 
             Connections {
-                target: createTypeObject
+                target: createTaskObject
                 function onShowError(message) {
                     error.errorText = message;
                     error.textSize = root.textSize

@@ -1,12 +1,18 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import "../dto"
 
 Page{
     id: root
     property color backgroundColor: "lightblue"
     property int textSize: 24
     property StackView stackView
+    property int boardId: -1;
+
+    Component.onCompleted: {
+        typeModel.refreshModel(root.boardId)
+    }
 
     background: Rectangle{
         id: backgroundRect
@@ -18,9 +24,10 @@ Page{
         anchors.fill: parent
         spacing: 5
 
-        CreateBoardWindow{
-            id: createBoard
+        CreateTypeWindow{
+            id: createType
             textSize: root.textSize
+            boardId: root.boardId
         }
 
         CustomButton{
@@ -30,18 +37,19 @@ Page{
             radius: 0
             parentColor: root.backgroundColor
             onClicked: {
+                taskModel.refreshModel(root.boardId);
                 stackView.pop()
             }
         }
 
         CustomButton{
             Layout.alignment: Qt.AlignHCenter
-            text: "Создать доску"
+            text: "Создать тип"
             textSize: root.textSize
             Layout.fillWidth: true
             parentColor: root.backgroundColor
             onClicked: {
-                createBoard.open();
+                createType.open();
             }
         }
         Rectangle{
@@ -60,15 +68,12 @@ Page{
                 spacing: 10
 
                 Repeater {
-                    model: boardModel
-
-                    delegate: BoardIcon{
-                        boardName: model.name
+                    model: typeModel
+                    delegate: TypeIcon{
+                        typeName: model.name
                         textSize: root.textSize
-                        description: model.description
-                        creationTime: model.creationTime
-                        stackView: root.stackView
-                        boardId: model.id
+                        typeId: model.id
+                        boardId: root.boardId
                     }
                 }
             }

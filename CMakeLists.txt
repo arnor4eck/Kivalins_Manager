@@ -42,21 +42,26 @@ set(HEADERS
 set(QML_FILES
     Main.qml
     StartPage.qml
-    CustomButton.qml
-    BoardsPage.qml
-    SettingsPage.qml
-    Navbar.qml
-    ErrorWindow.qml
-    SuccessWindow.qml
-    CreateBoardWindow.qml
-    CreateTaskWindow.qml
-    CircularButton.qml
-    BoardPage.qml
-    TaskIcon.qml
-    TaskIconDescriptionWindow.qml
-    BoardIcon.qml
-    BoardIconDescriptionWindow.qml
-    StatisticsWindow.qml
+    dto/CustomButton.qml
+    board/BoardsPage.qml
+    dto/SettingsPage.qml
+    dto/Navbar.qml
+    dto/ErrorWindow.qml
+    dto/SuccessWindow.qml
+    board/CreateBoardWindow.qml
+    task/CreateTaskWindow.qml
+    dto/CircularButton.qml
+    board/BoardPage.qml
+    task/TaskIcon.qml
+    task/TaskIconDescriptionWindow.qml
+    board/BoardIcon.qml
+    board/BoardIconDescriptionWindow.qml
+    dto/StatisticsWindow.qml
+    type/TypesBoard.qml
+    type/CreateTypeWindow.qml
+    type/TypeIcon.qml
+    task/UpdateTaskWindow.qml
+    task/FilterTasksWindow.qml
 )
 
 qt_add_executable(appKivalins_Manager
@@ -69,17 +74,11 @@ qt_add_qml_module(appKivalins_Manager
     VERSION 1.0
     QML_FILES ${QML_FILES}
     SOURCES ${HEADERS} ${SOURCES}
-    QML_FILES TypesBoard.qml
     SOURCES TypeObject.h
     SOURCES TypeData.cpp
     SOURCES TypeData.h
-    QML_FILES CreateTypeWindow.qml
     SOURCES CreateType.h
     SOURCES CreateType.cpp
-    QML_FILES TypeIcon.qml
-    QML_FILES UpdateTaskWindow.qml
-    QML_FILES FilterTasksWindow.qml
-    QML_FILES
 )
 
 target_link_libraries(appKivalins_Manager

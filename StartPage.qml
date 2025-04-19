@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import "./dto"
 
 Page{
     id: root
@@ -23,7 +24,7 @@ Page{
             parentColor: root.backgroundColor
             textSize: root.textSize
             onClicked: {
-                stackView.push("BoardsPage.qml", {
+                stackView.push("./board/BoardsPage.qml", {
                     textSize: root.textSize,
                     backgroundColor: root.backgroundColor,
                     stackView: root.stackView
@@ -39,7 +40,7 @@ Page{
             textSize: root.textSize
             parentColor: root.backgroundColor
             onClicked: {
-                stackView.push("SettingsPage.qml", {
+                stackView.push("./dto/SettingsPage.qml", {
                     textSize: root.textSize,
                     backgroundColor: root.backgroundColor,
                     stackView: root.stackView
