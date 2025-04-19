@@ -38,7 +38,7 @@ Page{
             textSize: root.textSize
             parentColor: root.backgroundColor
             onClicked: {
-                Qt.openUrlExternally("https://docs.google.com/document/d/1zPHbxPAOk9KvekUQxETPAlHZWjFHEZcCWvdmcq0k1ek/edit?usp=sharing");
+                Qt.openUrlExternally("https://docs.google.com/document/d/1NHSTuqLmZQc2UXnq56wm2BxwDfI44Y6P/edit?usp=sharing&ouid=108357203173565297610&rtpof=true&sd=true");
             }
         }
     }
