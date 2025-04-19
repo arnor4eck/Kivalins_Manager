@@ -47,26 +47,26 @@ set(HEADERS
 set(QML_FILES
     Main.qml
     StartPage.qml
-    dto/CustomButton.qml
-    board/BoardsPage.qml
-    dto/SettingsPage.qml
-    dto/Navbar.qml
-    dto/ErrorWindow.qml
-    dto/SuccessWindow.qml
-    board/CreateBoardWindow.qml
-    task/CreateTaskWindow.qml
-    dto/CircularButton.qml
-    board/BoardPage.qml
-    task/TaskIcon.qml
-    task/TaskIconDescriptionWindow.qml
-    board/BoardIcon.qml
-    board/BoardIconDescriptionWindow.qml
-    dto/StatisticsWindow.qml
-    type/TypesBoard.qml
-    type/CreateTypeWindow.qml
-    type/TypeIcon.qml
-    task/UpdateTaskWindow.qml
-    task/FilterTasksWindow.qml
+    qml/dto/CustomButton.qml
+    qml/board/BoardsPage.qml
+    qml/dto/SettingsPage.qml
+    qml/dto/Navbar.qml
+    qml/dto/ErrorWindow.qml
+    qml/dto/SuccessWindow.qml
+    qml/board/CreateBoardWindow.qml
+    qml/task/CreateTaskWindow.qml
+    qml/dto/CircularButton.qml
+    qml/board/BoardPage.qml
+    qml/task/TaskIcon.qml
+    qml/task/TaskIconDescriptionWindow.qml
+    qml/board/BoardIcon.qml
+    qml/board/BoardIconDescriptionWindow.qml
+    qml/dto/StatisticsWindow.qml
+    qml/type/TypesBoard.qml
+    qml/type/CreateTypeWindow.qml
+    qml/type/TypeIcon.qml
+    qml/task/UpdateTaskWindow.qml
+    qml/task/FilterTasksWindow.qml
 )
 
 qt_add_executable(appKivalins_Manager

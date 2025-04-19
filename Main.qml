@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import "./board"
+import "./qml/board"
 
 Window {
     id: window
