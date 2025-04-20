@@ -2,6 +2,7 @@
 #define BOARDDATA_H
 #include <QAbstractListModel>
 #include <vector>
+#include <QUrl>
 
 #include "scr/dto/GlobalVariables.h"
 #include "scr/object/BoardObject.h"
@@ -29,10 +30,11 @@ public:
 
     Q_INVOKABLE void refreshModel();
     Q_INVOKABLE void deleteBoard(int boardId);
-    Q_INVOKABLE void exportBoard(int boardId);
+    Q_INVOKABLE void exportBoard(const QUrl url, int boardId);
 
 signals:
     void modelUpdated();
+    void showError(const QString &message);
 };
 
 #endif // BOARDDATA_H

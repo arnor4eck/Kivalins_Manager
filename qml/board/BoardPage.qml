@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 import "../dto"
 import "../task"
 
@@ -135,9 +136,38 @@ Page {
                         filterTasksWindow.open();
                     }
                 }
+
                 SuccessWindow{
                     id: success
                     textSize: root.textSize
+                }
+
+                ErrorWindow{
+                    textSize: root.textSize
+                    id: error
+                }
+
+                Connections {
+                    target: boardModel
+                    function onShowError(message) {
+                        error.errorText = message;
+                        error.textSize = root.textSize
+                        error.open();
+                    }
+                }
+
+                FileDialog {
+                    id: fileDialog
+                    title: "Проводник"
+                    fileMode: FileDialog.SaveFile
+                    nameFilters: ["Табличные данные (*.csv)"]
+                    defaultSuffix: "csv"
+
+                    onAccepted: {
+                        boardModel.exportBoard(selectedFile, root.boardId);
+                        success.text = "Данные экспортированы!";
+                        success.open();
+                    }
                 }
 
                 CustomButton{
@@ -147,10 +177,7 @@ Page {
                     Layout.fillWidth: true
                     width: innerButtonColumn.width
                     onClicked: {
-                        boardModel.exportBoard(root.boardId);
-
-                        success.text = "Данные экспортированы!";
-                        success.open();
+                        fileDialog.open();
                     }
                 }
             }

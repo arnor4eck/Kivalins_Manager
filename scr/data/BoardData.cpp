@@ -1,8 +1,8 @@
 #include "BoardData.h"
-#include <fstream>
-#include <chrono>
-#include <ctime>
-#include <algorithm>
+#include <QStringConverter>
+#include <QUrl>
+#include <QDir>
+#include <QFileInfo>
 #include <QDebug>
 
 int BoardData::rowCount(const QModelIndex& parent) const {
@@ -49,34 +49,43 @@ void BoardData::addBoards() {
     }
 }
 
-void BoardData::exportBoard(int boardId){
-    SQLite::Statement tasks = this->db.getData("task", "*", "board_id = " + std::to_string(boardId));
+void BoardData::exportBoard(QUrl url, int boardId){
+    QString filePath = url.toLocalFile();
 
-    std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    std::ofstream out;
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        emit showError("Не удалось открыть файл");
+        return;
+    }
 
-    std::string curTime = std::string(std::ctime(&now)).substr(0, 10);
-    std::replace(curTime.begin(), curTime.end(), ' ', '_');
+    QTextStream out(&file); // Настройка текстового потока
+    out.setEncoding(QStringConverter::Utf8); // Установка UTF-8
+    out.setGenerateByteOrderMark(true);      // BOM
 
-    out.open((Global::getProjectPath() + "\\" + std::to_string(boardId) + "_" + curTime  + ".csv").c_str(),
-             std::ios::out | std::ios::binary);
+    SQLite::Statement tasks = db.getData("task", "*", "board_id = " + std::to_string(boardId));
 
-    out << "\xEF\xBB\xBF";
 
     out << "Task;Description;Creation Date;Task type\n";
 
+    while (tasks.executeStep()) {
+        QString taskName = QString::fromUtf8(tasks.getColumn(3).getString());
+        QString description = tasks.getColumn(4).getString().empty() ?
+                                  "" : QString::fromUtf8(tasks.getColumn(4).getString());
+        QString creationDate = QString::fromUtf8(tasks.getColumn(5).getString());
 
-    while(tasks.executeStep()){
-        out << tasks.getColumn(3).getString() << ';'
-            << ( tasks.getColumn(4).getString().size() == 0 ? "" : tasks.getColumn(4).getString()) << ';'
-            << tasks.getColumn(5).getString() << ';';
-        SQLite::Statement type = this->db.getData("type", "*", "type_id = " + tasks.getColumn(2).getString());
-        if(type.executeStep()){
-            out << type.getColumn(2) << '\n';
+        out << taskName << ';'
+            << description << ';'
+            << creationDate << ';';
+
+        SQLite::Statement type = db.getData("type", "*", "type_id = " + tasks.getColumn(2).getString());
+        if (type.executeStep()) {
+            QString typeName = QString::fromUtf8(type.getColumn(2).getString());
+            out << typeName;
         }
+        out << '\n';
     }
 
-    out.close();
+    file.close();
 }
 
 void BoardData::deleteBoard(int boardId){
