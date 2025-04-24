@@ -30,25 +30,19 @@ QVariant TaskData::data(const QModelIndex& index, int role) const {
 }
 
 void TaskData::loadTasks(int boardId, int type) {
-    SQLite::Statement tasks = db.getData("task", "*",
-                                          "board_id = " + std::to_string(boardId) +
-                                              (type != 0 ? " AND type_id = " + std::to_string(type) : ""));
+    SQLite::Statement tasks = SQLite::Statement(this->db.db, "SELECT t.task_id, t.name, t.description, b.name, t.creation_time "
+                                     "FROM task AS t JOIN type AS b ON t.type_id = b.type_id WHERE t.board_id = " + std::to_string(boardId) +
+                                    (type != 0 ? " AND t.type_id = " + std::to_string(type) : ""));
 
     while(tasks.executeStep()){
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        int id = tasks.getColumn(0);
-        SQLite::Statement getType = db.getData("type", "*", "type_id = " + tasks.getColumn(2).getString());
+        //int id = tasks.getColumn(0);
 
-        std::string typeName = "";
-        if(getType.executeStep()){
-            typeName = getType.getColumn(2).getString();
-        }
-
-        TaskObject* task = new TaskObject(id,
+        TaskObject* task = new TaskObject(tasks.getColumn(0).getInt(),
+                QString::fromStdString(tasks.getColumn(1).getString()),
+                (tasks.getColumn(2).getString().size() == 0 ? "Описание отсутствует" : QString::fromStdString(tasks.getColumn(2).getString())),
                 QString::fromStdString(tasks.getColumn(3).getString()),
-                (tasks.getColumn(4).getString().size() == 0 ? "Описание отсутствует" : QString::fromStdString(tasks.getColumn(4).getString())),
-                QString::fromStdString(typeName),
-                QString::fromStdString(tasks.getColumn(5).getString()));
+                QString::fromStdString(tasks.getColumn(4).getString()));
         this->m_data.emplace_back(task);
 
         endInsertRows();

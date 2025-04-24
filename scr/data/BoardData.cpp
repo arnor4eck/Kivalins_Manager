@@ -62,27 +62,17 @@ void BoardData::exportBoard(QUrl url, int boardId){
     out.setEncoding(QStringConverter::Utf8); // Установка UTF-8
     out.setGenerateByteOrderMark(true);      // BOM
 
-    SQLite::Statement tasks = db.getData("task", "*", "board_id = " + std::to_string(boardId));
+    SQLite::Statement tasks = SQLite::Statement(this->db.db, "SELECT t.name, t.description, t.creation_time, b.name "
+                                                             "FROM task AS t JOIN type AS b ON b.type_id = t.type_id WHERE t.board_id = " + std::to_string(boardId));
 
 
     out << "Task;Description;Creation Date;Task type\n";
 
     while (tasks.executeStep()) {
-        QString taskName = QString::fromUtf8(tasks.getColumn(3).getString());
-        QString description = tasks.getColumn(4).getString().empty() ?
-                                  "" : QString::fromUtf8(tasks.getColumn(4).getString());
-        QString creationDate = QString::fromUtf8(tasks.getColumn(5).getString());
-
-        out << taskName << ';'
-            << description << ';'
-            << creationDate << ';';
-
-        SQLite::Statement type = db.getData("type", "*", "type_id = " + tasks.getColumn(2).getString());
-        if (type.executeStep()) {
-            QString typeName = QString::fromUtf8(type.getColumn(2).getString());
-            out << typeName;
-        }
-        out << '\n';
+        out << QString::fromUtf8(tasks.getColumn(0).getString()) << ';' // task name
+            << (tasks.getColumn(1).getString().empty() ? "" : QString::fromUtf8(tasks.getColumn(1).getString())) << ';' // task description
+            << QString::fromUtf8(tasks.getColumn(2).getString()) << ';' // creation time
+            << QString::fromUtf8(tasks.getColumn(3).getString()) << '\n'; // type name
     }
 
     file.close();
