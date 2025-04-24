@@ -54,7 +54,7 @@ void BoardData::exportBoard(QUrl url, int boardId){
 
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        emit showError("Не удалось открыть файл");
+        emit showError();
         return;
     }
 
@@ -74,6 +74,8 @@ void BoardData::exportBoard(QUrl url, int boardId){
             << QString::fromUtf8(tasks.getColumn(2).getString()) << ';' // creation time
             << QString::fromUtf8(tasks.getColumn(3).getString()) << '\n'; // type name
     }
+
+    emit exported();
 
     file.close();
 }

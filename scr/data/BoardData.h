@@ -34,7 +34,8 @@ public:
 
 signals:
     void modelUpdated();
-    void showError(const QString &message);
+    void showError();
+    void exported();
 };
 
 #endif // BOARDDATA_H

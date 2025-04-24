@@ -149,10 +149,14 @@ Page {
 
                 Connections {
                     target: boardModel
-                    function onShowError(message) {
-                        error.errorText = message;
+                    function onShowError() {
+                        error.errorText = "Невозможно открыть файл!";
                         error.textSize = root.textSize
                         error.open();
+                    }
+                    function exported() {
+                        success.text = "Данные экспортированы!";
+                        success.open();
                     }
                 }
 
@@ -165,8 +169,6 @@ Page {
 
                     onAccepted: {
                         boardModel.exportBoard(selectedFile, root.boardId);
-                        success.text = "Данные экспортированы!";
-                        success.open();
                     }
                 }
 

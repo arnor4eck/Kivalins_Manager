@@ -36,7 +36,6 @@ void TaskData::loadTasks(int boardId, int type) {
 
     while(tasks.executeStep()){
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        //int id = tasks.getColumn(0);
 
         TaskObject* task = new TaskObject(tasks.getColumn(0).getInt(),
                 QString::fromStdString(tasks.getColumn(1).getString()),
