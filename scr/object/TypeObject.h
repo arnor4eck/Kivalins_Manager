@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QString>
 
-class TypeObject : public QObject {
+class TypeObject : public QObject { // объект типа задачи
     Q_OBJECT
 public:
     TypeObject(int id, QString name, QObject* parent = nullptr)

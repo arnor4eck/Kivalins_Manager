@@ -2,13 +2,13 @@
 #define GLOBAL_VARIABLES_H
 #include <string>
 
-namespace Global {
+namespace Global { // глабоальные переменные
     void setDatabasePath(const std::string& path);
-    const std::string& getDatabasePath();
+    const std::string& getDatabasePath(); // путь в базе данных
     void setProjectName(const std::string& name);
-    const std::string& getProjectName();
+    const std::string& getProjectName(); // название проекта
     void setProjectPath(const std::string& path);
-    const std::string& getProjectPath();
+    const std::string& getProjectPath(); // путь к проекту
 }
 
 #endif // GLOBAL_VARIABLES_H

@@ -15,7 +15,7 @@ private:
     std::vector<BoardObject*> m_data;
     DataBase db;
 public:
-    enum Roles {
+    enum Roles { // для переадресации из qml
         boardName = Qt::UserRole + 1,
         boardDescription,
         boardCreationTime,
@@ -24,18 +24,22 @@ public:
 
     explicit BoardData(QObject* parent = nullptr) : QAbstractListModel(parent), db(Global::getDatabasePath()) {}
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    QHash<int, QByteArray> roleNames() const override;
-    QVariant data(const QModelIndex& index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override; // для обращения из qml
+    QVariant data(const QModelIndex& index, int role) const override; // возвращает соответствующий вариант из обращения
     void addBoards();
 
-    Q_INVOKABLE void refreshModel();
-    Q_INVOKABLE void deleteBoard(int boardId);
-    Q_INVOKABLE void exportBoard(const QUrl url, int boardId);
+    Q_INVOKABLE void refreshModel(); // обновление модели
+    Q_INVOKABLE void deleteBoard(int boardId); // удаление доски
+    Q_INVOKABLE void exportBoard(const QUrl url, int boardId); // экспорт задач
+
+    ~BoardData(){
+        for(auto obj : this->m_data)
+            delete obj;
+    }
 
 signals:
-    void modelUpdated();
-    void showError();
-    void exported();
+    void showError(); // сигнал об ошибке
+    void exported(); // сигнал об успешном экспорте
 };
 
 #endif // BOARDDATA_H

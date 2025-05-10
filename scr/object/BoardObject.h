@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QString>
 
-class BoardObject : public QObject {
+class BoardObject : public QObject { // объект доски
     Q_OBJECT
 public:
     BoardObject(int id, QString name, QString description, QString creationTime, QObject* parent = nullptr)

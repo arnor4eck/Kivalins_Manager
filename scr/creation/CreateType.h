@@ -6,7 +6,7 @@
 #include "./scr/database/DataBase.h"
 
 
-class CreateType : public BaseCreate {
+class CreateType : public BaseCreate { // создание типа
     Q_OBJECT
 private:
     QString b_name;
@@ -15,17 +15,16 @@ private:
 
 public:
     explicit CreateType(QObject *parent = nullptr);
-    Q_INVOKABLE bool saveData() override;
+    Q_INVOKABLE bool saveData() override; // создание объекта
 
-    Q_INVOKABLE void setName(const QString &name);
-    Q_INVOKABLE void setBoardId(const int &boardId);
+    Q_INVOKABLE void setName(const QString &name); // установка имени
+    Q_INVOKABLE void setBoardId(const int &boardId); // установка ID
 
     QString name() const;
     int boardId() const;
 
 signals:
-    void typeAdded();
-    void showError(const QString &message);
+    void showError(const QString &message); // сигнал ошибки
 };
 
 #endif // CREATETYPE_H

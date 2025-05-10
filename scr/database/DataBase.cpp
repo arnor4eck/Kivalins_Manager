@@ -38,20 +38,4 @@ void DataBase::deleteData(const std::string &table_name, const std::string filte
     }
 }
 
-void DataBase::updateData(const std::string &table_name, const std::string param, const std::string new_data, const std::string filters){
-    std::string query = "UPDATE " + table_name + " SET " + param + '=' + new_data + " WHERE " + filters;
-    try{
-        this->db.exec(query);
-    }catch(const std::exception &e){
-        throw std::runtime_error("Updating data in table " + table_name + " in " + this->getPath() + " wasn`t done: " + e.what());
-    }
-}
-
-void DataBase::exec(const std::string &query){
-    try{
-        this->db.exec(query);
-    }catch(const std::exception &e){
-        throw std::runtime_error(std::string("Something went wrong: ") + e.what());
-    }
-}
 

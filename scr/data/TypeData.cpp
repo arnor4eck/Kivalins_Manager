@@ -7,8 +7,8 @@ int TypeData::rowCount(const QModelIndex& parent) const {
 
 QHash<int, QByteArray> TypeData::roleNames() const {
     return {
-        {typeName, "name"},
-        {typeId, "id"}
+        {typeName, "name"}, // название
+        {typeId, "id"} // ID
     };
 }
 
@@ -24,13 +24,13 @@ QVariant TypeData::data(const QModelIndex& index, int role) const {
 }
 
 void TypeData::loadTypes(int boardId) {
-    SQLite::Statement types = db.getData("type", "*",
+    SQLite::Statement types = db.getData("type", "*", // загрузка всех типов этой доски
                                          "board_id = 1 OR board_id =" + std::to_string(boardId));
 
     while(types.executeStep()){
         int id = types.getColumn(0);
 
-        TypeObject* task = new TypeObject(id,
+        TypeObject* task = new TypeObject(id, // добавление в вектор всех типов
                                           QString::fromStdString(types.getColumn(2).getString()));
         this->m_data.emplace_back(task);
     }
@@ -38,8 +38,8 @@ void TypeData::loadTypes(int boardId) {
 
 
 void TypeData::deleteType(int typeId, int boardId){
-    this->db.db.exec("UPDATE task SET type_id = 1 WHERE type_id = " + std::to_string(typeId));
-    this->db.db.exec("DELETE FROM type WHERE type_id = " + std::to_string(typeId));
+    this->db.db.exec("UPDATE task SET type_id = 1 WHERE type_id = " + std::to_string(typeId)); // где был этот тип - ставится "В работе"
+    this->db.deleteData("type", "type_id = " + std::to_string(typeId)); // удаление типа
 
     refreshModel(boardId);
 }

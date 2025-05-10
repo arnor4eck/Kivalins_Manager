@@ -7,11 +7,11 @@ int TaskData::rowCount(const QModelIndex& parent) const {
 
 QHash<int, QByteArray> TaskData::roleNames() const {
     return {
-        {taskName, "name"},
-        {taskDescription, "description"},
-        {taskCreationTime, "creationTime"},
-        {taskType, "type"},
-        {taskId, "id"}
+        {taskName, "name"}, // название
+        {taskDescription, "description"}, // описание
+        {taskCreationTime, "creationTime"}, // время создания
+        {taskType, "type"}, // тип задачи
+        {taskId, "id"} // ID
     };
 }
 
@@ -32,10 +32,10 @@ QVariant TaskData::data(const QModelIndex& index, int role) const {
 void TaskData::loadTasks(int boardId, int type) {
     SQLite::Statement tasks = SQLite::Statement(this->db.db, "SELECT t.task_id, t.name, t.description, b.name, t.creation_time "
                                      "FROM task AS t JOIN type AS b ON t.type_id = b.type_id WHERE t.board_id = " + std::to_string(boardId) +
-                                    (type != 0 ? " AND t.type_id = " + std::to_string(type) : ""));
+                                    (type != 0 ? " AND t.type_id = " + std::to_string(type) : "")); // все задачи этой доски
 
     while(tasks.executeStep()){
-        TaskObject* task = new TaskObject(tasks.getColumn(0).getInt(),
+        TaskObject* task = new TaskObject(tasks.getColumn(0).getInt(), // добавление в вектор
                 QString::fromStdString(tasks.getColumn(1).getString()),
                 (tasks.getColumn(2).getString().size() == 0 ? "Описание отсутствует" : QString::fromStdString(tasks.getColumn(2).getString())),
                 QString::fromStdString(tasks.getColumn(3).getString()),
@@ -45,16 +45,16 @@ void TaskData::loadTasks(int boardId, int type) {
 }
 
 bool TaskData::updateTask(int boardId, int taskId, QString name, QString description, int typeId){
-    if(name.length() > 16) {
+    if(name.length() > 16) { // валидация названия
         emit showError("Название больше 16 символов");
         return false;
     }
 
-    if(name.isEmpty()) {
+    if(name.isEmpty()) { // валидация названия
         emit showError("Название не должно быть пустым");
         return false;
     }
-    if(description.length() > 64){
+    if(description.length() > 64){ // валдиация описания
         emit showError("Описание больше 64 символов");
         return false;
     }

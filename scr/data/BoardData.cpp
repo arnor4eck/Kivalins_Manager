@@ -12,10 +12,10 @@ int BoardData::rowCount(const QModelIndex& parent) const {
 
 QHash<int, QByteArray> BoardData::roleNames() const {
     return {
-        {boardName, "name"},
-        {boardDescription, "description"},
-        {boardCreationTime, "creationTime"},
-        {boardId, "id"}
+        {boardName, "name"}, // название
+        {boardDescription, "description"}, // описание
+        {boardCreationTime, "creationTime"}, // время создания
+        {boardId, "id"} // ID
     };
 }
 
@@ -33,12 +33,12 @@ QVariant BoardData::data(const QModelIndex& index, int role) const {
 }
 
 void BoardData::addBoards() {
-    SQLite::Statement boards = db.getData("board", "*", "board_id <> 1");
+    SQLite::Statement boards = db.getData("board", "*", "board_id <> 1"); // все доски, кроме первой
 
     while(boards.executeStep()){
         int id = boards.getColumn(0);
 
-        BoardObject* board = new BoardObject(id,
+        BoardObject* board = new BoardObject(id, // добавление в вектор всех досок
                                              QString::fromStdString(boards.getColumn(1).getString()),
                                              (boards.getColumn(2).getString().size() == 0 ? "Описание отсутствует" : QString::fromStdString(boards.getColumn(2).getString())),
                                              QString::fromStdString(boards.getColumn(3).getString()));
@@ -47,19 +47,19 @@ void BoardData::addBoards() {
 }
 
 void BoardData::exportBoard(QUrl url, int boardId){
-    QString filePath = url.toLocalFile();
+    QString filePath = url.toLocalFile(); // преобразование в строку
 
     QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) { // открытие файла
         emit showError();
         return;
     }
 
     QTextStream out(&file); 
-    out.setEncoding(QStringConverter::Utf8);
+    out.setEncoding(QStringConverter::Utf8); // для корректного вывода кириллицы
     out.setGenerateByteOrderMark(true);      // BOM
 
-    SQLite::Statement tasks = SQLite::Statement(this->db.db, "SELECT t.name, t.description, t.creation_time, b.name "
+    SQLite::Statement tasks = SQLite::Statement(this->db.db, "SELECT t.name, t.description, t.creation_time, b.name " // получение всех задач этой доски
                                                              "FROM task AS t JOIN type AS b ON b.type_id = t.type_id WHERE t.board_id = " + std::to_string(boardId));
 
 
@@ -78,9 +78,9 @@ void BoardData::exportBoard(QUrl url, int boardId){
 }
 
 void BoardData::deleteBoard(int boardId){
-    this->db.deleteData("task", "board_id = " + std::to_string(boardId));
-    this->db.deleteData("type", "board_id = " + std::to_string(boardId));
-    this->db.deleteData("board", "board_id = " + std::to_string(boardId));
+    this->db.deleteData("task", "board_id = " + std::to_string(boardId)); // удаление всех задач, которые были прикреплены к доске
+    this->db.deleteData("type", "board_id = " + std::to_string(boardId)); // удаление всех типов задач, которые были прикреплены к доске
+    this->db.deleteData("board", "board_id = " + std::to_string(boardId)); // удаление доски
 
     refreshModel();
 }
@@ -96,5 +96,4 @@ void BoardData::refreshModel(){
     addBoards();
 
     endResetModel();
-    emit modelUpdated();
 }

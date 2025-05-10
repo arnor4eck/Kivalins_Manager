@@ -5,24 +5,24 @@
 CreateTask::CreateTask(QObject *parent) : BaseCreate(parent), db(Global::getDatabasePath()) {}
 
 bool CreateTask::saveData() {
-    if(this->b_name.length() > 16) {
+    if(this->b_name.length() > 16) { // валидация названия
         emit showError("Название больше 16 символов");
         return false;
     }
 
-    if(this->b_name.isEmpty()) {
+    if(this->b_name.isEmpty()) { // валидация названия
         emit showError("Название не должно быть пустым");
         return false;
     }
-    if(this->b_description.length() > 64){
+    if(this->b_description.length() > 64){ // валидация описания
         emit showError("Описание больше 64 символов");
         return false;
     }
 
-    SQLite::Statement query(this->db.db, "INSERT INTO task (name, description, board_id) VALUES (?, ?, ?)");
+    SQLite::Statement query(this->db.db, "INSERT INTO task (name, description, board_id) VALUES (?, ?, ?)"); // добавление записи
 
     query.bind(1, this->b_name.toStdString());
-    if(this->b_description.isEmpty()){
+    if(this->b_description.isEmpty()){ // если описание пустое - вставляем NULL
         query.bind(2);
     }else{
         query.bind(2, this->b_description.toStdString());
@@ -31,8 +31,6 @@ bool CreateTask::saveData() {
 
     query.exec();
 
-
-    emit taskAdded();
     return true;
 }
 

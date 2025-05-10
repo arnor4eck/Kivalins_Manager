@@ -6,26 +6,26 @@
 #include "./scr/database/DataBase.h"
 
 
-class CreateBoard : public BaseCreate {
+class CreateBoard : public BaseCreate { // создание доски
     Q_OBJECT
 private:
     QString b_name;
     QString b_description;
-    DataBase db;
+    DataBase db; // база данных
 
 public:
     explicit CreateBoard(QObject *parent = nullptr);
     Q_INVOKABLE bool saveData() override;
 
-    Q_INVOKABLE void setName(const QString &name);
-    Q_INVOKABLE void setDescription(const QString &description);
+    Q_INVOKABLE void setName(const QString &name); // установка название
+    Q_INVOKABLE void setDescription(const QString &description); // установка описания
 
     QString name() const;
     QString description() const;
 
 signals:
-    void boardAdded();
-    void showError(const QString &message);
+    void boardAdded(); // сигнал создания доски
+    void showError(const QString &message); // сигнал ошибки
 };
 
 #endif // CREATEBOARD_H
