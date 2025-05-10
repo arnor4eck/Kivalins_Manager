@@ -36,7 +36,6 @@ void BoardData::addBoards() {
     SQLite::Statement boards = db.getData("board", "*", "board_id <> 1");
 
     while(boards.executeStep()){
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
         int id = boards.getColumn(0);
 
         BoardObject* board = new BoardObject(id,
@@ -44,8 +43,6 @@ void BoardData::addBoards() {
                                              (boards.getColumn(2).getString().size() == 0 ? "ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ Ð¾Ñ‚ÑÑƒÑ‚ÑÑ‚Ð²ÑƒÐµÑ‚" : QString::fromStdString(boards.getColumn(2).getString())),
                                              QString::fromStdString(boards.getColumn(3).getString()));
         this->m_data.emplace_back(board);
-
-        endInsertRows();
     }
 }
 
@@ -58,8 +55,8 @@ void BoardData::exportBoard(QUrl url, int boardId){
         return;
     }
 
-    QTextStream out(&file); //  áâà®©ª  â¥ªáâ®¢®£® ¯®â®ª 
-    out.setEncoding(QStringConverter::Utf8); // “áâ ­®¢ª  UTF-8
+    QTextStream out(&file); 
+    out.setEncoding(QStringConverter::Utf8);
     out.setGenerateByteOrderMark(true);      // BOM
 
     SQLite::Statement tasks = SQLite::Statement(this->db.db, "SELECT t.name, t.description, t.creation_time, b.name "

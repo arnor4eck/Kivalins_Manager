@@ -11,7 +11,7 @@ public:
         try{
             this->db = SQLite::Database(_path, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
         } catch (const std::exception& e) {
-            throw std::runtime_error("Connection to " + path + " wasn`t done: " + e.what());
+            throw std::runtime_error("Connection to " + path + " was failed: " + e.what());
         }
     }
 

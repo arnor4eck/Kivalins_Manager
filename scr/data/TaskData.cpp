@@ -35,16 +35,12 @@ void TaskData::loadTasks(int boardId, int type) {
                                     (type != 0 ? " AND t.type_id = " + std::to_string(type) : ""));
 
     while(tasks.executeStep()){
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-
         TaskObject* task = new TaskObject(tasks.getColumn(0).getInt(),
                 QString::fromStdString(tasks.getColumn(1).getString()),
                 (tasks.getColumn(2).getString().size() == 0 ? "Описание отсутствует" : QString::fromStdString(tasks.getColumn(2).getString())),
                 QString::fromStdString(tasks.getColumn(3).getString()),
                 QString::fromStdString(tasks.getColumn(4).getString()));
         this->m_data.emplace_back(task);
-
-        endInsertRows();
     }
 }
 

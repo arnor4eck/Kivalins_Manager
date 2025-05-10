@@ -38,7 +38,6 @@ bool CreateBoard::saveData() {
         }
     }
 
-
     emit boardAdded();
     return true;
 }

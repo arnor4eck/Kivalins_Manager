@@ -28,14 +28,11 @@ void TypeData::loadTypes(int boardId) {
                                          "board_id = 1 OR board_id =" + std::to_string(boardId));
 
     while(types.executeStep()){
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
         int id = types.getColumn(0);
 
         TypeObject* task = new TypeObject(id,
                                           QString::fromStdString(types.getColumn(2).getString()));
         this->m_data.emplace_back(task);
-
-        endInsertRows();
     }
 }
 
@@ -56,6 +53,5 @@ void TypeData::refreshModel(int boardId){
     m_data.clear();
 
     loadTypes(boardId);
-
     endResetModel();
 }
